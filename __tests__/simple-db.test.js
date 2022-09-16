@@ -2,6 +2,7 @@ const fs = require('fs/promises');
 const path = require('path');
 const SimpleDb = require('../lib/simple-db');
 const crypto = require('crypto');
+const exp = require('constants');
 
 
 
@@ -36,6 +37,48 @@ describe('simple database', () => {
     const res = await data.getById(plane.id);
     expect(res).toEqual(plane);
   });
+
+
+  it('gets all', () => {
+    const PowerRangers = [
+      {
+        name: 'Red Ranger',
+        Power: 'Fire',
+      },
+      {
+        name: 'Green Ranger',
+        Power: 'Earth',
+      },
+      {
+        name: 'Blue Ranger',
+        Power: 'Water',
+      },
+    ];
+    const data = new SimpleDb(TEST_DIR);
+    PowerRangers.forEach((PowerRangers) => {
+      return data.save(PowerRangers);
+    });
+    return data.getAll().then((res) => {
+      expect(res).toEqual([
+        {
+          name: expect.any(String),
+          Power: expect.any(String),
+          id: expect.any(String),
+        },
+        {
+          name: expect.any(String),
+          Power: expect.any(String),
+          id: expect.any(String),
+        },
+        {
+          name: expect.any(String),
+          Power: expect.any(String),
+          id: expect.any(String),
+        },
+      ]);
+    });
+  });
+
 
 
 
